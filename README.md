@@ -97,3 +97,16 @@ python -m risk_agent.main              # live enforcement loop
 | 1 | alert_only | Dashboard P&L tracks the Groww app; alerts arrive |
 | 2 | enforce, max orders = 1 | The second order is reversed in about 2 s |
 | 3 | enforce, ₹10k / ₹30k / 30 | Normal use |
+
+## 9. Deploying (VPS)
+
+```bash
+# on a fresh Ubuntu VPS, as root
+git clone https://github.com/dr8157/groww-risk-agent.git /opt/risk-agent && sudo bash /opt/risk-agent/deploy/setup.sh
+nano /etc/risk-agent/secrets.env      # GROWW_API_KEY, GROWW_TOTP_SECRET, TELEGRAM_*, HEARTBEAT_URL
+sudo bash /opt/risk-agent/deploy/setup.sh   # re-run after filling secrets
+# read-only check (prints exact command at end of setup), then:
+systemctl start risk-agent && journalctl -u risk-agent -f
+```
+
+Auto-deploy: add repo secrets `DEPLOY_HOST`, `DEPLOY_USER` (= `deploy`), `DEPLOY_SSH_KEY`; every green push to `main` runs `deploy/update.sh`, which refuses to restart during market hours.

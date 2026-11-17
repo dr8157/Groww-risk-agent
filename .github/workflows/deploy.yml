@@ -1,0 +1,21 @@
+name: deploy
+# Deploys on push to main (after tests pass). Needs repo secrets: DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY
+on:
+  workflow_run:
+    workflows: [tests]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and update
+        env:
+          KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USER_: ${{ secrets.DEPLOY_USER }}
+        run: |
+          install -m 600 /dev/null key && printf '%s\n' "$KEY" > key
+          ssh -i key -o StrictHostKeyChecking=accept-new "$USER_@$HOST" "sudo /opt/risk-agent/deploy/update.sh"

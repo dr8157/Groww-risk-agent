@@ -38,7 +38,7 @@ def install_fake_sdk(monkeypatch, fail_times=0):
     for name, mod in (("growwapi", pkg), ("growwapi.groww", groww), ("growwapi.groww.exceptions", exc)):
         monkeypatch.setitem(sys.modules, name, mod)
     monkeypatch.setenv("GROWW_API_KEY", "k")
-    monkeypatch.setenv("GROWW_TOTP_SECRET", "JBSWY3DPEHPK3PXP")
+    monkeypatch.setenv("GROWW_TOTP_SECRET", "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP")
     return state
 
 
