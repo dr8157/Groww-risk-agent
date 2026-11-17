@@ -5,7 +5,6 @@ set -euo pipefail
 REPO_URL="${REPO_URL:-https://github.com/dr8157/groww-risk-agent.git}"
 BRANCH="${BRANCH:-main}"
 
-timedatectl set-timezone Asia/Kolkata
 apt-get update -qq && apt-get install -y -qq python3 python3-venv git
 id riskagent >/dev/null 2>&1 || useradd --system --home /opt/risk-agent --shell /usr/sbin/nologin riskagent
 mkdir -p /var/lib/risk-agent /etc/risk-agent
