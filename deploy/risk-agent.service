@@ -1,0 +1,27 @@
+[Unit]
+Description=Groww Risk Agent (deterministic loss-limit enforcer)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=riskagent
+Group=riskagent
+WorkingDirectory=/opt/risk-agent
+EnvironmentFile=/etc/risk-agent/secrets.env
+Environment=RISK_AGENT_DATA=/var/lib/risk-agent
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/risk-agent/venv/bin/python -m risk_agent.main
+Restart=always
+RestartSec=5
+# SIGTERM lets the agent send its "STOPPED" alert before exiting
+TimeoutStopSec=15
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/risk-agent
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

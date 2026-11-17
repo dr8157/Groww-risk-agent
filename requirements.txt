@@ -1,0 +1,6 @@
+growwapi>=1.5.0
+pyotp>=2.9
+python-dotenv>=1.0
+streamlit>=1.40
+pandas>=2.0
+pytest>=8.0

@@ -1,0 +1,13 @@
+# secrets - this repo is PUBLIC. Never commit credentials.
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets.env
+# runtime data
+data/
+__pycache__/
+.pytest_cache/
+venv/
+.venv/
